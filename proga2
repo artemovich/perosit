@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <iostream> 
+#include <cmath>
+#include <conio.h>
+using namespace std; 
+void work(int n){
+	int a, b,ll;
+	//int n=3;
+	double f, *y, *x, st[100][100], *st1, *kfp,znam;
+	y = (double*)calloc(n, sizeof(double));
+	x = (double*)calloc(n, sizeof(double));
+	st1 = (double*)calloc(n*n, sizeof(double));
+	kfp = (double*)calloc(n*n, sizeof(double));
+	a=0;
+	b=9;
+	f = (int)(b - a); f = f / (int)(n); 
+	for (int i = 0; i < n+1; i++)
+	{
+		x[i] =  i*(9 / (n));
+		y[i] =  3 * sin((3 * x[i]) / 4) + 0.1;
+		printf_s("x%d = %f, y%d = %f\n", i,x[i],i, y[i]);
+	}
+	printf("\n\n\n");
+	for (int i = 0; i < 10; i++)
+	{
+		kfp[i] = 0;
+		st1[i] = 0;
+		for (int j = 0; j < 100; j++)
+		{
+			st[i][j] = 0;
+			st[i][1] = 1;
+		}
+	}
+	for (int k = 0; k < n; k++)
+	{
+		ll = 1;
+		znam = 1;
+	for (int i = 0; i < n+1; i++)
+	{
+		if (i != k)
+		{
+			if (ll == 1)
+			{
+				st[k][0] = -x[i];
+			}
+
+			else
+			{
+				st[k][ll] = 1;
+				for (int j = ll - 1; j != 0; j--)
+					st[k][j]=kfp[j-1]-x[i]*kfp[j];
+				st[k][0] = kfp[0] * (-x[i]);
+			}
+			for (int r = 0; r < n; r++)
+				kfp[r] = st[k][r];
+			ll++;
+			znam *= -(x[k] - x[i]);
+		}
+	}
+	for (int r = 0; r < n + 1; r++)
+	{
+		st[k][r] *= -(y[k] / znam);
+		st1[r] +=st[k][r];
+	}
+}
+	printf("L= %fx^%d ", st1[n], n);
+	for (int t = n - 1; t >= 1; t--)
+	{
+		if (st1[t] > 0)
+			printf("+ %fx^%d ", st1[t], t);
+		else printf("- %fx^%d ", -st1[t], t);
+	}
+	if
+		(st1[0] > 0)printf("+ %f", st1[0]);
+	else printf("- %f", -st1[0]);
+	_getch();
+}
+int main()
+{
+	int N[3]={1, 3, 9};
+	for(int i=0;i<3;i++)
+		work(N[i]);
+}
