@@ -112,10 +112,11 @@ public:
 };
 void main(){
 	char x='y';
-	Expression * e=(Expression*)new Add(*(Expression*)new Number(1), *(Expression*)new Variable(x));
+	Number* e = new Number(1); 
+	e->diff('x');
 	cout << "\n";
 	Expression *de=e->diff(x);
-	de->print();
+	//de->print();
 	cout << "\n";
 	delete e;
 	delete de;
