@@ -236,17 +236,20 @@ double * work(int n, int cheb){
 int main()
 {
 	int N[3] = { 1, 3, 9};
-	double *y, **Bliy, *s1;
+	double *y, ***Bliy, *s1;
 	y = (double*)calloc(91, sizeof(double));
-	Bliy = (double**)calloc(3, sizeof(double*));
+	Bliy = (double***)calloc(2, sizeof(double**));
 	s1 = (double*)calloc(3, sizeof(double));
 	for (int k = 0; k<3; k++)
-		Bliy[k] = (double*)calloc(90, sizeof(double));
-	for (int f = 0; f<3; f++)
+		Bliy[k] = (double**)calloc(2, sizeof(double*));
+	for (int k = 0; k<3; k++)
+		for (int z = 0; z<90; z++)
+			Bliy[k][z] = (double*)calloc(90, sizeof(double));
+	for (int f = 0; f<2; f++)
 		for (int i = 0; i<3; i++)
 		{
 			s1=work(N[i], f);
-			Bliy[f]=write(s1, N[i], f);
+			Bliy[f][i]=write(s1, N[i], f);
 		}
 	char *name;
 	string *a;
@@ -266,7 +269,7 @@ int main()
 			{
 				double k = z;
 				k = k / 10;
-				file << k << ' ' << Bliy[i][z] << endl;
+				file << k << ' ' << Bliy[f][i][z] << endl;
 			}
 		file.close();
 		}
@@ -280,7 +283,7 @@ int main()
 	}
 	for (int f = 0; f<2; f++)
 		for (int i = 0; i<3; i++)
-			AbPog(Bliy[i], y, i, f);
+			AbPog(Bliy[f][i], y, i, f);
 }
 
 /*output// полином Лагранжа
