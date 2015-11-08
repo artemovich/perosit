@@ -100,7 +100,7 @@ public:
 		this->e1=a1;
 		this->e2=a2;
 	}
-	Expression print(Expression a1, Expression a2)
+	Expression print()
 	{
 		cout << "(";
 		e1.print();
