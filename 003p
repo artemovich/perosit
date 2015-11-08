@@ -1,0 +1,123 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<iostream>
+using namespace std;
+class Expression{
+public:
+	char y;
+	Expression * diff(char y);
+	void print();
+	Expression(){
+	}
+};
+class Number:public Expression
+	{
+		double data;
+	public:
+		Number(double a)
+		{
+			data=a;
+		}
+		Expression * diff(char y)
+		{
+			Number* ret = new Number(0);
+			return (Expression*) ret;
+		}
+		void print()
+		{
+			cout << data;
+		}
+		~Number()
+		{
+			delete(&data);
+		}
+		
+	};
+class Variable:public Expression
+{
+	char per;
+	public:
+	Variable(char a)
+	{
+		per=a;
+	}
+	Expression * diff(char y)
+	{
+		if (per==y)
+		{
+			Number* ret = new Number(1);
+			return (Expression*) ret;
+		}
+		else
+		{
+			Number* ret = new Number(0);
+			return (Expression*) ret;
+		}
+	}
+	void print()
+	{
+		cout << per;
+	}
+	~Variable()
+	{
+		delete(&per);
+	}
+};
+class Add:public Expression{
+public:
+	Expression e1;
+	Expression e2;
+	Expression * diff(char y)
+	{
+		Expression * ex= (Expression*)new Add(*e1.diff(y), *e2.diff(y));
+	return ex;
+	}
+		Add(Expression a1, Expression a2)
+	{
+		this->e1=a1;
+		this->e2=a2;
+	}
+			Expression print(Expression a1, Expression a2)
+	{
+		cout << "(";
+		e1.print();
+		cout << " + ";
+		e2.print();
+		cout << ")";
+	}
+};
+class Sub:public Expression
+{
+public:
+	Expression e1;
+	Expression e2;
+		Expression * diff(char y)
+	{
+		Expression * ex= (Expression*)new Sub(*e1.diff(y), *e2.diff(y));
+	return ex;
+	}
+	Sub(Expression a1, Expression a2)
+	{
+		this->e1=a1;
+		this->e2=a2;
+	}
+	Expression print(Expression a1, Expression a2)
+	{
+		cout << "(";
+		e1.print();
+		cout << " - ";
+		e2.print();
+		cout << ")";
+	}
+};
+void main(){
+	char x='y';
+	Expression * e=(Expression*)new Add(*(Expression*)new Number(1), *(Expression*)new Variable(x));
+	cout << "\n";
+	Expression *de=e->diff(x);
+	de->print();
+	cout << "\n";
+	delete e;
+	delete de;
+	system("pause");
+}
