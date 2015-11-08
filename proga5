@@ -1,0 +1,330 @@
+#include <stdio.h>
+#include <iostream> 
+#include <cmath>
+#include <conio.h>
+using namespace std;
+#define pi 3.1415926535
+double ** write(double *s1, double *s14, int n)
+{
+	FILE *f, *f4;
+	fopen_s(&f, "C:\\gor\\fil.txt", "a");
+	int k;
+	double v = 0, z = n, **bliy;
+	double v4 = 0;
+	bliy = (double**)calloc(2, sizeof(double*));
+	for (int i = 0; i < 2;i++)
+		bliy[i] = (double*)calloc(90, sizeof(double));
+	if (n == 1)
+	{
+		fopen_s(&f, "C:\\gor\\file1.txt", "a");
+		fopen_s(&f4, "C:\\gor\\file1_4eb.txt", "a");
+	}
+	if (n == 3)
+	{
+		fopen_s(&f, "C:\\gor\\file2.txt", "a");
+		fopen_s(&f4, "C:\\gor\\file2_4eb.txt", "a");
+	}
+	if (n == 9)
+	{
+		fopen_s(&f, "C:\\gor\\file3.txt", "a");
+		fopen_s(&f4, "C:\\gor\\file3_4eb.txt", "a");
+	}
+	for (z = 0; z <= 9; z += 0.1)
+	{
+		k = 10 * z;
+		for (int i = n; i >= 0; i--)
+			if (i != 0)
+			{
+				v += s1[i] * pow(z, i);
+				v4 += s14[i] * pow(z, i);
+			}
+			else
+			{
+				v += s1[i];
+				v4 += s14[i];
+			}
+		bliy[0][k] = v;
+		bliy[1][k] = v;
+		fprintf_s(f, "%f %f\n", z, bliy[k]);
+		v = 0;
+		v4 = 0;
+	}
+	fprintf(f, "\n");
+	fclose(f);
+	remove("C:\\gor\\fil.txt");
+	return bliy;
+}
+void AbPog(double * bliy, double * y, int i){
+	FILE *f, *fp, *fp2;
+	double *pog, z;
+	fopen_s(&f, "C:\\gor\\fil.txt", "a");
+
+	pog = (double*)calloc(90, sizeof(double));
+	if (i == 0)
+		fopen_s(&f,"C:\\gor\\file4-1.txt", "a");
+	if (i == 1)
+		fopen_s(&f,"C:\\gor\\file4-2.txt", "a");
+	if (i == 2)
+		fopen_s(&f,"C:\\gor\\file4-3.txt", "a");
+	fopen_s(&fp,"C:\\gor\\file6.txt", "a");
+	fopen_s(&fp2,"C:\\gor\\file7.txt", "a");
+	for (int k = 0; k<91; k++)
+	{
+		double t = k;
+		t = t / 10;
+		fprintf(fp, "%f %f\n", t, bliy[k]);
+		fprintf(fp2, "%f %f\n", t, y[k]);
+	}
+	for (int k = 0; k<91; k++)
+	{
+		if (bliy[k]>y[k])
+			pog[k] = bliy[k] - y[k];
+		else
+			pog[k] = y[k] - bliy[k];
+		double kk = k;
+		z = kk / 10;
+		fprintf_s(f, "%f %f\n", z, pog[k]);
+	}
+	fclose(f);
+	remove("C:\\gor\\fil.txt");
+}
+double * realgraph()
+{
+	FILE *f;
+	double *to4y, i = 0;
+	to4y = (double*)calloc(90, sizeof(double));
+	int k;
+	fopen_s(&f,"C:\\gor\\file4.txt", "a");
+	for (i = 0; i < 9; i += 0.1)
+	{
+		k = 10 * i;
+		to4y[k] = 3.0 * sin((3.0 * i) / 4.0) + 0.1;
+		fprintf(f, "%f %lf\n", i, to4y[k]);
+	}
+	fclose(f);
+	return to4y;
+}
+double ** work(int n){
+	FILE *fp, *fp4;
+	fopen_s(&fp,"C:\\gor\\output.txt", "a");
+	fopen_s(&fp4, "C:\\gor\\output4eb.txt", "a");
+	int c;
+	double *y, *x, **s, *s1, *g, z, **bliy;
+	double *y4, *x4, **s4, *s14, *g4, z4;	//чебышевские переменные
+	y = (double*)calloc(n + 2, sizeof(double));
+	x = (double*)calloc(n + 2, sizeof(double));
+	s1 = (double*)calloc(n*n + 10, sizeof(double));
+	g = (double*)calloc(n*n + 10, sizeof(double));
+	s = (double**)calloc(n*n + 10, sizeof(double*));
+	y4 = (double*)calloc(n + 2, sizeof(double));
+	x4 = (double*)calloc(n + 2, sizeof(double));
+	s14 = (double*)calloc(n*n + 10, sizeof(double));
+	g4 = (double*)calloc(n*n + 10, sizeof(double));
+	s4 = (double**)calloc(n*n + 10, sizeof(double*));
+	bliy = (double**)calloc(2, sizeof(double*));
+	for (int i = 0; i < 2;i++)
+		bliy[i] = (double*)calloc(90, sizeof(double));
+	for (int i = 0; i < n*n + 10; i++)
+	{
+		s[i] = (double*)calloc(n*n + 10, sizeof(double));
+		s4[i] = (double*)calloc(n*n + 10, sizeof(double));
+	}
+	for (int i = 0; i < n + 1; i++)
+	{
+		x[i] = i*(9 / (n));
+		x4[i] = (9 * cos((2 * i + 1)*pi / (2 * n + 2)) + 9) / 2;
+		y[i] = 3 * sin((3 * x[i]) / 4) + 0.1;
+		y4[i] = 3 * sin((3 * x4[i]) / 4) + 0.1;
+	}
+	printf("\n\n\n");
+	for (int i = 0; i < 10; i++)
+	{
+		g[i] = 0;
+		s1[i] = 0;
+		for (int j = 0; j < n*n + 10; j++)
+		{
+			s[i][j] = 0;
+			s[i][1] = 1;
+			s4[i][j] = 0;
+			s4[i][1] = 1;
+		}
+	}
+	for (int k = 0; k < n + 1; k++)
+	{
+		c = 1;
+		z = 1;
+		z4=1;
+		for (int i = 0; i < n + 1; i++)
+		{
+			if (i != k)
+			{
+				if (c == 1)
+				{
+					s[k][0] = -x[i];
+					s4[k][0] = -x4[i];
+				}
+
+				else
+				{
+					s[k][c] = 1;
+					s4[k][c] = 1;
+					for (int j = c - 1; j != 0; j--)
+					{
+						s[k][j] = g[j - 1] - x[i] * g[j];
+						s4[k][j] = g[j - 1] - x4[i] * g[j];
+					}
+					s[k][0] = g[0] * (-x[i]);
+					s4[k][0] = g[0] * (-x4[i]);
+
+				}
+				for (int r = 0; r < n + 1; r++)
+				{
+					g[r] = s[k][r];
+					g4[r] = s4[k][r];
+				}
+				c++;
+				z *= -(x[k] - x[i]);
+				z4 *= -(x4[k] - x4[i]);
+			}
+		}
+		for (int r = 0; r < n + 1; r++)
+		{
+			s[k][r] *= -(y[k] / z);
+			s1[r] += s[k][r];
+			s4[k][r] *= -(y4[k] / z4);
+			s14[r] += s4[k][r];
+		}
+	}
+	printf("L= %fx^%d ", s1[n], n);
+	fprintf(fp, "%lfx^%d", s1[n], n);
+	fprintf(fp4, "%lfx^%d", s14[n], n);
+	for (int t = n - 1; t >= 1; t--)
+	{
+		if (s1[t] > 0)
+		{
+			printf("+%fx^%d ", s1[t], t);
+			fprintf(fp, "+%fx^%d ", s1[t], t);
+			fprintf(fp4, "+%fx^%d ", s14[t], t);
+		}
+		else
+		{
+			printf("-%fx^%d ", -s1[t], t);
+			fprintf(fp, "-%fx^%d ", -s1[t], t);
+			fprintf(fp4, "-%fx^%d ", -s14[t], t);
+		}
+	}
+	if (s1[0] > 0)
+	{
+		printf("+%f", s1[0]);
+		fprintf(fp, "+%f\n", s1[0]);
+		fprintf(fp4, "+%f\n", s14[0]);
+	}
+	else
+	{
+		printf("-%f", -s1[0]);
+		fprintf(fp, "-%f\n", -s1[0]);
+		fprintf(fp4, "-%f\n", -s14[0]);
+	}
+	fclose(fp);
+	fclose(fp4);
+	double w = 1, R;
+	double w4 = 1, R4;
+	for (int i = 0; i<n; i++)
+		if (n % 2 == 1)
+		{
+			w *= 0 - x[i];
+			w4 *= 0 - x4[i];
+		}
+		else
+		{
+			w *= (pi / 2) - x[i];
+			w4 *= (pi / 2) - x4[i];
+		}
+	R = 3 * pow(3 / 4, n)*w;
+	R4 = 3 * pow(3 / 4, n)*w4;
+	printf("  %f", R);
+	bliy = write(s1, s14, n);
+	return bliy;
+}
+int main()
+{
+	double *y, **bliy;
+	y = (double*)calloc(90, sizeof(double));
+	bliy = (double**)calloc(3, sizeof(double*));
+	for (int i = 0; i<3; i++)
+		bliy[i] = (double*)calloc(90, sizeof(double));
+	if (remove("C:\\gor\\file1.txt") != 0)//приближение по 2 точкам
+		printf("ferror1");
+	if (remove("C:\\gor\\file2.txt") != 0)//приближение по 4 точкам
+		printf("ferror2");
+	if (remove("C:\\gor\\file3.txt") != 0)//приближение по 10 точкам
+		printf("ferror3");
+	if (remove("C:\\gor\\file4.txt") != 0)//точная функция
+		printf("ferror4");
+	if (remove("C:\\gor\\file4-1.txt") != 0)//абсолютная погрешность по 2 точкам
+		printf("ferror1");
+	if (remove("C:\\gor\\file4-2.txt") != 0)//абсолютная погрешность по 4 точкам
+		printf("ferror1");
+	if (remove("C:\\gor\\file4-3.txt") != 0)//абсолютная погрешность по 10 точкам
+		printf("ferror1");
+	if (remove("C:\\gor\\output.txt") != 0)//полином Лагранжа
+		printf("ferror1");
+
+	// проверочные данные
+	if (remove("C:\\gor\\file6.txt") != 0)//проверка приходящих значений приближения в AbPog
+		printf("ferror1");
+	if (remove("C:\\gor\\file7.txt") != 0)//проверка приходящих значений точной функции в AbPog
+		printf("ferror1");
+	if (remove("C:\\gor\\bliy1.txt") != 0)//проверка приходящих значений приближения в main
+		printf("ferror1");
+	if (remove("C:\\gor\\bliy2.txt") != 0)//проверка приходящих значений приближения в main
+		printf("ferror1");
+	if (remove("C:\\gor\\bliy3.txt") != 0)//проверка приходящих значений приближения в main
+		printf("ferror1");
+	if (remove("C:\\gor\\to4y.txt") != 0)//проверка приходящих значений точной функции в main
+		printf("ferror1");
+
+
+	int N[3] = { 1, 3, 9 };
+//	for (int i = 0; i<3; i++)
+	//	bliy = work(N[i]);
+	y = realgraph();
+	FILE *f, *fp, *fp2, *fp3;
+	fopen_s(&f,"C:\\gor\\bliy1.txt", "a");
+	fopen_s(&fp,"C:\\gor\\bliy2.txt", "a");
+	fopen_s(&fp2,"C:\\gor\\bliy3.txt", "a");
+	fopen_s(&fp3,"C:\\gor\\to4y.txt", "a");
+	for (int i = 0; i<3; i++){
+		bliy = work(N[i]);// откуда тут это
+		if (i == 0)
+			for (int z = 0; z<91; z++)
+			{
+			double k = z;
+			k = k / 10;
+			fprintf(f, "%f %f\n", k, bliy[i][z]);
+			}
+		if (i == 1)
+			for (int z = 0; z<91; z++)
+			{
+			double k = z;
+			k = k / 10;
+			fprintf(fp, "%f %f\n", k, bliy[i][z]);
+			}
+		if (i == 2)
+			for (int z = 0; z<91; z++)
+			{
+			double k = z;
+			k = k / 10;
+			fprintf(fp2, "%f %f\n", k, bliy[i][z]);
+			}
+	}
+	for (int i = 0; i<91; i++)
+	{
+		double k = i;
+		k = k / 10;
+		fprintf(fp3, "%f %f\n", k, y[i]);
+	}
+	for (int i = 0; i<3; i++)
+		AbPog(bliy[i], y, i);
+	//_getch();
+}
