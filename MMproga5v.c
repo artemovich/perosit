@@ -9,24 +9,9 @@ using namespace std;
 double * write(double *s1, int n, int cheb)
 {
 	char name;
-	string a;
 	int k;
 	double v = 0, z = n, *bliy;
 		bliy = (double*)calloc(90, sizeof(double));
-		int l;
-		if(n==1)
-			l=0;
-		if(n==3)
-			l=1;
-		if(n==9)
-			l=2;
-	name = 48+l;
-	a="C:\\gor\\file";
-	if(cheb!=0)
-		a+="4eb";
-	a+=name;
-	a+=".txt";
-	ofstream file(a.c_str());
 	for (k=0;k<91;k++)
 	{
 		z=k/10.0;
@@ -40,42 +25,26 @@ double * write(double *s1, int n, int cheb)
 				v += s1[i];
 			}
 		bliy[k] = v;
-		//file << z << ' ' << bliy[k]<< endl;
 		v = 0;
 	}
-	file.close();
 	return bliy;
 }
 void AbPog(double * bliy, double * y, int i, int f){
 	double *pog, z;
 	char name;
-	string a, a2;
+	string a;
 	pog = (double*)calloc(90, sizeof(double));
 
 	name = 48+i;
 	a="C:\\gor\\pogr";
-	a2="C:\\gor\\bliypog";
 	if(f!=0)
 	{
 		a+="4eb";
-		a2+="4eb";
 	}
 	a+="4-";
-	a2+="4-";
 	a+=(name+1);
-	a2+=(name+1);
 	a+=".txt";
-	a2+=".txt";
 	ofstream file(a.c_str());
-	ofstream file2(a2.c_str());
-	ofstream file3("C:\\gor\\file7.txt");
-	for (int k = 0; k<91; k++)
-	{
-		double t = k;
-		t = t / 10;
-		//file2 << t << ' ' << bliy[k] << endl;
-		//file3 << t << ' ' << y[k] << endl;
-	}
 	for (int k = 0; k<91; k++)
 	{
 		if (bliy[k]>y[k])
@@ -83,12 +52,10 @@ void AbPog(double * bliy, double * y, int i, int f){
 		else
 			pog[k] = y[k] - bliy[k];
 		double kk = k;
-		z = kk / 10;
+		z = kk / 10.0;
 		file << z << ' ' << pog[k] << endl;
 	}
 	file.close();
-	file2.close();
-	file3.close();
 }
 double * realgraph()
 {
@@ -268,7 +235,7 @@ int main()
 			for (int z = 0; z<91; z++)
 			{
 				double k = z;
-				k = k / 10;
+				k = k / 10.0;
 				file << k << ' ' << Bliy[f][i][z] << endl;
 			}
 		file.close();
@@ -278,7 +245,7 @@ int main()
 	for (int z = 0; z<91; z++)
 	{
 		double k = z;
-		k = k / 10;
+		k = k / 10.0;
 		//file << k << " " << y[z]<< endl;
 	}
 	for (int f = 0; f<2; f++)
