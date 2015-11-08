@@ -249,7 +249,7 @@ double ** work(int n){
 int main()
 {
 	double *y, **bliy;
-	y = (double*)calloc(90, sizeof(double));
+	y = (double*)calloc(91, sizeof(double));
 	bliy = (double**)calloc(3, sizeof(double*));
 	for (int i = 0; i<3; i++)
 		bliy[i] = (double*)calloc(90, sizeof(double));
@@ -289,11 +289,16 @@ int main()
 //	for (int i = 0; i<3; i++)
 	//	bliy = work(N[i]);
 	y = realgraph();
-	FILE *f, *fp, *fp2, *fp3;
-	fopen_s(&f,"C:\\gor\\bliy1.txt", "a");
-	fopen_s(&fp,"C:\\gor\\bliy2.txt", "a");
-	fopen_s(&fp2,"C:\\gor\\bliy3.txt", "a");
-	fopen_s(&fp3,"C:\\gor\\to4y.txt", "a");
+	FILE *f1, *f2, *f3, *ft, *f41, *f42, *f43;
+	fopen_s(&f1,"C:\\gor\\bliy1.txt", "a");
+	fopen_s(&f2,"C:\\gor\\bliy2.txt", "a");
+	fopen_s(&f3,"C:\\gor\\bliy3.txt", "a");
+
+	fopen_s(&f41,"C:\\gor\\bliy41.txt", "a");
+	fopen_s(&f42,"C:\\gor\\bliy42.txt", "a");
+	fopen_s(&f43,"C:\\gor\\bliy43.txt", "a");
+
+	fopen_s(&ft,"C:\\gor\\to4y.txt", "a");
 	for (int i = 0; i<3; i++){
 		bliy = work(N[i]);// откуда тут это
 		if (i == 0)
@@ -301,28 +306,31 @@ int main()
 			{
 			double k = z;
 			k = k / 10;
-			fprintf(f, "%f %f\n", k, bliy[i][z]);
+			fprintf(f1, "%f %f\n", k, bliy[0][z]);
+			fprintf(f41, "%f %f\n", k, bliy[1][z]);
 			}
 		if (i == 1)
 			for (int z = 0; z<91; z++)
 			{
 			double k = z;
 			k = k / 10;
-			fprintf(fp, "%f %f\n", k, bliy[i][z]);
+			fprintf(f2, "%f %f\n", k, bliy[0][z]);
+			fprintf(f42, "%f %f\n", k, bliy[1][z]);
 			}
 		if (i == 2)
 			for (int z = 0; z<91; z++)
 			{
 			double k = z;
 			k = k / 10;
-			fprintf(fp2, "%f %f\n", k, bliy[i][z]);
+			fprintf(f3, "%f %f\n", k, bliy[0][z]);
+			fprintf(f43, "%f %f\n", k, bliy[1][z]);
 			}
 	}
 	for (int i = 0; i<91; i++)
 	{
 		double k = i;
 		k = k / 10;
-		fprintf(fp3, "%f %f\n", k, y[i]);
+		fprintf(ft, "%f %f\n", k, y[i]);
 	}
 	for (int i = 0; i<3; i++)
 		AbPog(bliy[i], y, i);
