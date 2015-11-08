@@ -113,7 +113,7 @@ double * work(int n, int cheb){
 			l=1;
 		if(n==9)
 			l=2;
-		string a="C:\\gor\\output";
+		string a="C:\\gor\\output.txt";
 		if(cheb!=0)
 			a+="4eb";
 		a+=l;
@@ -240,11 +240,11 @@ int main()
 	y = (double*)calloc(91, sizeof(double));
 	Bliy = (double***)calloc(2, sizeof(double**));
 	s1 = (double*)calloc(3, sizeof(double));
-	for (int k = 0; k<3; k++)
-		Bliy[k] = (double**)calloc(2, sizeof(double*));
-	for (int k = 0; k<3; k++)
-		for (int z = 0; z<90; z++)
+	for (int k = 0; k<2; k++){
+		Bliy[k] = (double**)calloc(3, sizeof(double*));
+		for (int z = 0; z<3; z++)
 			Bliy[k][z] = (double*)calloc(90, sizeof(double));
+	}
 	for (int f = 0; f<2; f++)
 		for (int i = 0; i<3; i++)
 		{
