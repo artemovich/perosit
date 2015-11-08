@@ -4,10 +4,9 @@
 using namespace std;
 class Expression{
 public:
-	Expression * diff(char y);
-	void print();
-	Expression(){
-	}
+	virtual Expression * diff(char y);
+	virtual void print();
+	Expression(){}
 };
 class Number:public Expression
 	{
@@ -76,7 +75,7 @@ public:
 		this->e1=a1;
 		this->e2=a2;
 	}
-			Expression print()
+			void print()
 	{
 		cout << "(";
 		e1.print();
@@ -100,7 +99,7 @@ public:
 		this->e1=a1;
 		this->e2=a2;
 	}
-	Expression print()
+	void print()
 	{
 		cout << "(";
 		e1.print();
@@ -112,7 +111,7 @@ public:
 void main(){
 	char x='y';
 	Number* e = new Number(1); 
-	e->diff('x');
+	e->diff('y');
 	cout << "\n";
 	Expression *de=e->diff(x);
 	//de->print();
