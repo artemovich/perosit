@@ -1,0 +1,137 @@
+#include<cmath>
+#include<stdio.h>
+#include<stdlib.h>
+#include<conio.h>
+#include<fstream>
+#include <iostream> 
+using namespace std;
+ofstream file("C:\\gor2\\file.txt");
+void trap(int n)
+{
+	double *x, *y, F = 0, E = 0;
+	x = (double*)calloc(n, sizeof(double));
+	y = (double*)calloc(n, sizeof(double));
+	for (int i = 0; i < n + 1; i++)
+	{
+		double k = i, vs, vs2, vs3;// вспомогательные
+		x[i] = ((3 * k) / n) + 1;// узлы
+		vs = sqrt(x[i] * x[i] + 1);
+		vs2 = 2 * pow(x[i], 3) + x[i];
+		vs3 = 1 / sinh(x[i]);
+		vs *= vs2;
+		vs -= vs3;
+		vs /= 8;
+		y[i] = vs;// значения
+		printf("f( %lf ) = %lf\n", x[i], y[i]);// проверка
+	}
+	for (int i = 0; i < n; i++)
+	{
+		F += ((y[i] + y[i + 1]) / 2)*(x[i + 1] - x[i]);// приближение
+		E -= (4 * pow(x[i], 4) + 6 * pow(x[i], 2) + 1) / (sqrt(pow(1 + x[i] * x[i], 3)));// погрешность
+	}
+	printf("%lf\n%lf\n", F, E);
+	file << "приближение составным правилом трапеций  " << F << endl << "пошрешность составного правила трапеций  " << E << endl;
+
+	/*
+	double I;// составная формула или нет
+	for (int i = 0; i < n; i++)
+	{
+		double k = i;
+		x[i] = ((3 * k) / (n - 1)) + 1;
+	}
+
+	for (int i = 0; i < n; i++)
+	{
+		double vs, vs2, vs3, a, b;
+		vs = sqrt(x[i] * x[i] + 1);
+		vs2 = 2 * pow(x[i], 3) + x[i];
+		vs3 = 1 / sinh(x[i]);
+		vs *= vs2;
+		vs -= vs3;
+		vs /= 8;
+		y[i] = vs;// значения
+	}*/
+
+
+	_getch();
+}
+void gauss(double *x, double *y, int n)
+{
+	double I=0;//приближение по Гауссу
+	double a, b, f1, f2;//вспомогательные
+/*	x = (double*)calloc(n, sizeof(double));
+	for (int i = 0; i < n; i++)
+	{
+		double k = i;
+		x[i] = ((3 * k) / (n - 1)) + 1;
+	}*/
+	for (int i = 0; i < n; i++)
+	{
+		a = (x[i] + x[i + 1]) / 2.0;
+		b = (x[i + 1] - x[i]) / 2.0;
+		f1 = (a - (b / sqrt(3)));//найти точную функцию и подставить туда эти значения
+		f2 = (a + (b / sqrt(3)));
+		I += b *(f1 +f2);
+	}
+	file << "приближение по Гауссу  " << I << endl;
+	//file << "погрешность приближения Гаусса  " << "" << endl;
+}
+void main()
+{
+	for (int i = 2; i < 129; i *= i)
+		trap(i);
+	
+
+
+	double *x, *y;
+	int n = 8;
+	x = (double*)calloc(n, sizeof(double));
+	y = (double*)calloc(n, sizeof(double));
+	x[0] = -0.5773502692;
+	x[1] = -x[0];
+
+	y[0] = 1.0;
+	y[1] = y[0];
+
+	gauss(x, y, 2);
+	x[0] = -0.7745966692;
+	x[1] = 0.0;
+	x[2] = -x[0];
+
+	y[0] = 0.5555555556;
+	y[1] = 0.8888888889;
+	y[2] = y[0];
+
+	gauss(x, y, 3);
+	x[0] = -0.861136116;
+	x[1] = -0.3399810436;
+	x[2] = -x[1];
+	x[3] = -x[0];
+
+	y[0] = 0.3478548451;
+	y[1] = 0.6521451549;
+	y[2] = y[1];
+	y[3] = y[0];
+
+	gauss(x, y, 4);
+	x[0] = -0.9602898565;
+	x[1] = -0.7966664774;
+	x[2] = -0.5255324100;
+	x[3] = -0.1834346425;
+	x[4] = -x[3];
+	x[5] = -x[2];
+	x[6] = -x[1];
+	x[7] = -x[0];
+
+	y[0] = 0.1012285363;
+	y[1] = 0.2223810345;
+	y[2] = 0.3137066459;
+	y[3] = 0.3626837834;
+	y[4] = y[3];
+	y[5] = y[2];
+	y[6] = y[1];
+	y[7] = y[0];
+
+	gauss(x, y, 8);
+	file.close();
+}
