@@ -19,8 +19,10 @@ Expression * read_expressio(char * a)
 		{
 			int j = 0;
 			while (a[j] == ')')
+			{
 				k--;
-			j++;
+				j++;
+			}
 			for (int kk = 0; kk < j - 1; kk++)
 				c[kk] = b[kk];
 		}
