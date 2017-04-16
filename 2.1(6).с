@@ -1,0 +1,23 @@
+#include<math.h>
+double pr(int n)
+{
+	double **u, *lam, *lammi, *lampl;
+	u = (double**)calloc(n, sizeof(double*);
+	lam = (double*)calloc(n, sizeof(double);
+	lammi = (double*)calloc(n, sizeof(double);
+	lampl = (double*)calloc(n, sizeof(double);
+	for (int i = 0; i < n; n++)
+		u[i] = (double*)calloc(n, sizeof(double);
+	lam[1] = (u[i - 1][j] - 2 * u[i][j] + u[i + 1][j]) / (h[1][2]);// /u[i][j]
+	lammi[1] = (-u[i][j] + u[i + 1][j]) / (h[1][2]);// /u[i][j]
+	lammi[2] = (-u[i][j] + u[i][j - 1]) / (h[2][2]);// /u[i][j]
+	lam[2] = (u[i][j - 1] - 2 * u[i][j] + u[i][j + 1])/(h[2][2]);// /u[i][j]
+	lampl[1] = (u[i + 1][j] - u[i][j]) / (h[1][2]);// /u[i][j]
+	lampl[2] = (u[i][j + 1] - u[i][j]) / (h[2][2]);// /u[i][j]
+}
+void main()
+{
+	int n = 100;
+	double rez;
+	rez = pr(n);
+}
